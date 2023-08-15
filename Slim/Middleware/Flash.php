@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Slim - a micro PHP 5 framework
  *
@@ -30,21 +31,22 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 namespace Slim\Middleware;
 
- /**
-  * Flash
-  *
-  * This is middleware for a Slim application that enables
-  * Flash messaging between HTTP requests. This allows you
-  * set Flash messages for the current request, for the next request,
-  * or to retain messages from the previous request through to
-  * the next request.
-  *
-  * @package    Slim
-  * @author     Josh Lockhart
-  * @since      1.6.0
-  */
+/**
+ * Flash
+ *
+ * This is middleware for a Slim application that enables
+ * Flash messaging between HTTP requests. This allows you
+ * set Flash messages for the current request, for the next request,
+ * or to retain messages from the previous request through to
+ * the next request.
+ *
+ * @package    Slim
+ * @author     Josh Lockhart
+ * @since      1.6.0
+ */
 class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /**
@@ -155,7 +157,7 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
     /**
      * Array Access: Offset Exists
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         $messages = $this->getMessages();
 
@@ -165,7 +167,7 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
     /**
      * Array Access: Offset Get
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $messages = $this->getMessages();
 
@@ -175,7 +177,7 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
     /**
      * Array Access: Offset Set
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->now($offset, $value);
     }
@@ -183,7 +185,7 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
     /**
      * Array Access: Offset Unset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->messages['prev'][$offset], $this->messages['now'][$offset]);
     }
@@ -192,7 +194,7 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
      * Iterator Aggregate: Get Iterator
      * @return \ArrayIterator
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         $messages = $this->getMessages();
 
@@ -202,11 +204,8 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
     /**
      * Countable: Count
      */
-    public function count()
+    public function count(): int
     {
         return count($this->getMessages());
     }
-
-
-
 }
